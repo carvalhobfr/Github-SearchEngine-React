@@ -74,3 +74,24 @@ export const SubmitButton = styled.button.attrs(props => ({
   //   css `
   // svg {annimation: ${rotate} 2s linear infinite  `
 */
+
+export const List = styled.ul`
+  list-style: none;
+  margin-top: 2em;
+  li {
+    padding: 1em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    /* ↓ isso serve para pegar a partir do segundo elementod a lista, ou seja pega li que tenha outro li em cima ↓ */
+    & + li {
+      border-top: 1px solid #eee;
+    }
+  }
+  a {
+    color: #7159c1;
+    text-decoration: none;
+  }
+`;
