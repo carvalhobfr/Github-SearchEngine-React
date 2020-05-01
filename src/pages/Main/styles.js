@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+// import styled, { keyframes, css } from 'styled-components'; caso queira utilizar o comentado lá em baixo.
 
 export const Container = styled.div`
   max-width: 700px;
@@ -13,10 +14,9 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-
-  svg {
-    margin-right: 1em;
+    svg {
+      margin-right: 1em;
+    }
   }
 `;
 
@@ -34,18 +34,43 @@ export const Form = styled.form`
   }
 `;
 
-export const SubmitButton = styled.button.attrs({ type: 'submit' })`
+const rotate = keyframes`
+from {
+transform : rotate(0deg)
+}
+to {
+  transform : rotate(360deg)
+}
+`;
+
+export const SubmitButton = styled.button.attrs(props => ({
+  type: 'submit',
+  disabled: props.loading,
+}))`
   background: #7159c1;
   border: 0;
-  padding: 0 15px;
-  margin-left: 10px;
+  padding: 0 1em;
+  margin-left: 0.8em;
   border-radius: 4px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  svg {
-    margin: 0;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+    svg {
+      animation: ${rotate} 2s linear infinite;
+    }
   }
 `;
+
+/*
+  // pode fazer utilizando o módulo css do styled component também na amimação do 360 do carregar,
+  // mas eu achei mais fácil fazer igual SaaS, de qualquer forma o segundo modo seria assim :
+  //  ${props =>
+  //  props.loading &&
+  //   css `
+  // svg {annimation: ${rotate} 2s linear infinite  `
+*/
