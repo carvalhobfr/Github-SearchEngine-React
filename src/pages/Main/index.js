@@ -12,6 +12,8 @@ export default class Main extends Component {
     newRepo: '',
     repositories: [],
     loading: false,
+    errorMsg: '',
+    error: false,
   };
 
   // carregar os dados do localStorage
@@ -41,14 +43,13 @@ export default class Main extends Component {
     this.setState({ loading: true, error: false });
 
     try {
-      const { newRepo, repositories } = this.state;
+      const { newRepo, repositories, errorMsg } = this.state;
 
-      if (newRepo === '')
-        throw new Error('Você precisa indicar um repositório');
+      if (newRepo === '') throw 'Você precisa indicar um repositório';
 
       const hasRepo = repositories.find(r => r.name === newRepo);
 
-      if (hasRepo) throw new Error('Repositório duplicado');
+      if (hasRepo) throw 'Repositório duplicado';
 
       const response = await api.get(`/repos/${newRepo}`);
 
@@ -61,14 +62,14 @@ export default class Main extends Component {
         newRepo: '',
       });
     } catch (error) {
-      this.setState({ error: true });
+      this.setState({ error: true, errorMsg: error });
     } finally {
       this.setState({ loading: false });
     }
   };
 
   render() {
-    const { newRepo, repositories, loading } = this.state;
+    const { newRepo, repositories, loading, errorMsg, error } = this.state;
     return (
       <Container>
         <h1>
@@ -90,6 +91,7 @@ export default class Main extends Component {
               <FaPlus color="#FFF" size={14} />
             )}
           </SubmitButton>
+          {error ? <span>{errorMsg}</span> : ''}
         </Form>
         <List>
           {repositories.map(repository => (
