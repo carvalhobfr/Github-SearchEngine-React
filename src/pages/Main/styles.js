@@ -95,3 +95,8 @@ export const List = styled.ul`
     text-decoration: none;
   }
 `;
+
+export const ErrorMsg = styled.span`
+  color: red;
+  align-self: flex-start;
+`;

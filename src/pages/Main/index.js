@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 import Container from '../../components/Container/index';
-import { Form, SubmitButton, List } from './styles';
+import { Form, SubmitButton, List, ErrorMsg } from './styles';
 
 export default class Main extends Component {
   state = {
@@ -56,13 +56,12 @@ export default class Main extends Component {
       const data = {
         name: response.data.full_name,
       };
-
       this.setState({
         repositories: [...repositories, data],
         newRepo: '',
       });
     } catch (error) {
-      this.setState({ error: true, errorMsg: error });
+      this.setState({ error: true, errorMsg: error || '' });
     } finally {
       this.setState({ loading: false });
     }
@@ -91,8 +90,9 @@ export default class Main extends Component {
               <FaPlus color="#FFF" size={14} />
             )}
           </SubmitButton>
-          {error ? <span>{errorMsg}</span> : ''}
         </Form>
+        {error ? <ErrorMsg>{errorMsg}</ErrorMsg> : null}
+
         <List>
           {repositories.map(repository => (
             <li key={repository.name}>
