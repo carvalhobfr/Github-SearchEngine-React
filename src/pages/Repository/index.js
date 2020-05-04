@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaSpinner } from 'react-icons/fa';
-import { Loading, Owner } from './style';
+import { Loading, Owner, IssuesList } from './style';
 import Container from '../../components/Container/index';
 
 import api from '../../services/api';
@@ -64,6 +64,24 @@ export default class Repository extends Component {
           <h1>{repository.name}</h1>
           <p>{repository.description}</p>
         </Owner>
+        <IssuesList>
+          {issues.map(issue => (
+            <li key={String(issue.id)}>
+              <a href={issue.user.html_url}>
+                <img src={issue.user.avatar_url} alt={issue.user.login} />
+              </a>
+              <div>
+                <strong>
+                  <a href={issue.html_url}>{issue.title}</a>
+                  {issue.labels.map(label => (
+                    <span key={String(label.id)}>{label.name}</span>
+                  ))}
+                </strong>
+                <p>{issue.user.login}</p>
+              </div>
+            </li>
+          ))}
+        </IssuesList>
       </Container>
     );
   }
