@@ -82,7 +82,7 @@ export default class Main extends Component {
         <Form onSubmit={this.handleSubmit}>
           <input
             type="text"
-            placeholder="Adicionar repositório"
+            placeholder="Adicionar repositório (e.g. facebook/react)"
             value={newRepo}
             onChange={this.handleInputChange}
           />
