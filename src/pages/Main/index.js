@@ -34,7 +34,7 @@ export default class Main extends Component {
   }
 
   handleInputChange = e => {
-    this.setState({ newRepo: e.target.value });
+    this.setState({ newRepo: e.target.value.toLowerCase() });
   };
 
   handleSubmit = async e => {
@@ -61,7 +61,10 @@ export default class Main extends Component {
         newRepo: '',
       });
     } catch (error) {
-      this.setState({ error: true, errorMsg: error || '' });
+      this.setState({
+        error: true,
+        errorMsg: error.response ? 'Repositório não existe' : error,
+      });
     } finally {
       this.setState({ loading: false });
     }
