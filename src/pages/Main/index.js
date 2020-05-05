@@ -34,7 +34,7 @@ export default class Main extends Component {
   }
 
   handleInputChange = e => {
-    this.setState({ newRepo: e.target.value.toLowerCase() });
+    this.setState({ newRepo: e.target.value });
   };
 
   handleSubmit = async e => {
@@ -47,7 +47,9 @@ export default class Main extends Component {
 
       if (newRepo === '') throw 'Você precisa indicar um repositório';
 
-      const hasRepo = repositories.find(r => r.name === newRepo);
+      const hasRepo = repositories.find(
+        r => r.name.toLowerCase() === newRepo.toLowerCase()
+      );
 
       if (hasRepo) throw 'Repositório duplicado';
 
